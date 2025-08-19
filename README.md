@@ -3,20 +3,20 @@
 含“跨城创新联系事件”（edge-level）与“城市—年份指标”（node-level），提供从 抓取 → 清洗 → 标准化 → 网络构建 → 空间计量分析 的可复现实验管线。
 
 ## 目录
-
+```
 data/
-raw/         # 原始抓取（不入库/不公开）
-interim/     # 中间过程
-processed/   # 标准化后可复现的数据集
+  raw/
+  interim/
+  processed/
 scripts/
-python/      # 采集/解析/清洗/构图
-R/           # 空间计量与可视化
-julia/       # ABM 与网络演化
-stata/       # 复核与制表
-notebooks/     # 交互式分析
-outputs/       # 导出图表与表格
-docs/          # 论文附录/说明
-
+  python/
+  R/
+  julia/
+  stata/
+notebooks/
+outputs/
+docs/
+```
 
 ## 事件数据最小字段（edge-level）
 
@@ -107,22 +107,22 @@ weight 若采用“分摊计数”，请在文档写明方案（如 1/(n_src * n
 | 列名                            | 类型      | 说明                                                   |
 | ----------------------------- | ------- | ---------------------------------------------------- |
 | patent\_id                    | string  | 专利标识（建议存 `publication_no` 或 `application_no`）        |
-| application\_no               | string? | 申请号                                                  |
-| publication\_no               | string? | 公开号                                                  |
-| grant\_no                     | string? | 授权号                                                  |
-| patent\_title                 | string? | 专利标题                                                 |
-| application\_date             | date?   | 申请日                                                  |
-| publication\_date             | date?   | 公布日                                                  |
-| grant\_date                   | date?   | 授权日                                                  |
-| ipc\_main / ipc\_all          | string? | 主/全量 IPC（分号分隔）                                       |
-| cpc\_main / cpc\_all          | string? | 主/全量 CPC（分号分隔）                                       |
-| transfer\_mode                | enum?   | `assignment` \| `license` \| `pledge` \| `others`    |
-| consideration\_amount         | number? | 对价金额（CNY）                                            |
-| share\_percent                | number? | 许可/股权份额（%）                                           |
-| assignee\_from / assignee\_to | string? | 转出/转入受让人                                             |
-| inventor\_names               | string? | 发明人姓名（分号分隔）                                          |
-| agent                         | string? | 代理机构                                                 |
-| legal\_status                 | enum?   | `pending` \| `granted` \| `invalidated` \| `expired` |
+| application\_no               | string | 申请号                                                  |
+| publication\_no               | string | 公开号                                                  |
+| grant\_no                     | string | 授权号                                                  |
+| patent\_title                 | string | 专利标题                                                 |
+| application\_date             | date   | 申请日                                                  |
+| publication\_date             | date   | 公布日                                                  |
+| grant\_date                   | date   | 授权日                                                  |
+| ipc\_main / ipc\_all          | string | 主/全量 IPC（分号分隔）                                       |
+| cpc\_main / cpc\_all          | string | 主/全量 CPC（分号分隔）                                       |
+| transfer\_mode                | enum   | `assignment` \| `license` \| `pledge` \| `others`    |
+| consideration\_amount         | number | 对价金额（CNY）                                            |
+| share\_percent                | number | 许可/股权份额（%）                                           |
+| assignee\_from / assignee\_to | string | 转出/转入受让人                                             |
+| inventor\_names               | string | 发明人姓名（分号分隔）                                          |
+| agent                         | string | 代理机构                                                 |
+| legal\_status                 | enum   | `pending` \| `granted` \| `invalidated` \| `expired` |
 
 #### B. 联合论文 / 科研合作（type=co_author）
 
@@ -131,13 +131,13 @@ weight 若采用“分摊计数”，请在文档写明方案（如 1/(n_src * n
 | paper\_id                                             | string  | `doi` \| `wos_uid` \| `pmid` \| `cnki_id`                      |
 | title                                                 | string  | 论文标题                                                           |
 | journal                                               | string  | 期刊名                                                            |
-| volume / issue / pages                                | string? | 卷/期/页                                                          |
-| doc\_type                                             | string? | Article, Review, …                                             |
+| volume / issue / pages                                | string  | 卷/期/页                                                          |
+| doc\_type                                             | string  | Article, Review, …                                             |
 | publish\_date                                         | date    | 出版日期                                                           |
 | affiliation\_source\_full / affiliation\_target\_full | string  | 源/目标机构地址原文                                                     |
-| num\_authors / num\_affiliations                      | int?    | 作者数/机构数                                                        |
-| subject\_category                                     | string? | 学科分类（JCR/CCS/CSCD 等）                                           |
-| fraction\_scheme                                      | enum?   | `equal` \| `harmonic` \| `first_last_priority` \| `full_count` |
+| num\_authors / num\_affiliations                      | int     | 作者数/机构数                                                        |
+| subject\_category                                     | string  | 学科分类（JCR/CCS/CSCD 等）                                           |
+| fraction\_scheme                                      | enum    | `equal` \| `harmonic` \| `first_last_priority` \| `full_count` |
 | citation\_count                                       | int?    | 被引次数（可后补）                                                      |
 
 #### C. 企业关系（type=firm_tie）
@@ -149,20 +149,20 @@ weight 若采用“分摊计数”，请在文档写明方案（如 1/(n_src * n
 | deal\_id / agreement\_id                  | string  | 交易/协议编号                                                                                                                     |
 | deal\_status                              | enum    | `announced` \| `signed` \| `closed` \| `terminated`                                                                         |
 | relation\_subtype                         | enum    | `M&A` \| `equity_invest` \| `joint_venture` \| `strategic_alliance` \| `supplier_link` \| `board_interlock` \| `co_project` |
-| invest\_round                             | enum?   | `seed` \| `A` \| `B` … \| `pre-IPO`                                                                                         |
-| stake\_percent                            | number? | 持股比例（%）                                                                                                                     |
-| valuation\_pre / valuation\_post          | number? | 事前/事后估值（CNY）                                                                                                                |
-| buyer\_or\_acquirer / seller\_or\_target  | string? | 收购方/被收购方                                                                                                                    |
-| product\_or\_service                      | string? | 合作标的/产品                                                                                                                     |
-| hs\_code / cicc\_code / gics              | string? | 供需/行业编码                                                                                                                     |
-| contract\_amount                          | number? | 合同额（CNY）                                                                                                                    |
-| start\_date / end\_date                   | date?   | 生效区间                                                                                                                        |
-| is\_listed\_source / is\_listed\_target   | int?    | 是否上市（0/1）                                                                                                                   |
-| stock\_code\_source / stock\_code\_target | string? | 证券代码，如 `600519.SH`                                                                                                          |
-| exchange\_source / exchange\_target       | enum?   | `SSE` \| `SZSE` \| `HKEX` \| `NASDAQ` \| `NYSE`                                                                             |
-| director\_name                            | string? | （若 `board_interlock`）                                                                                                       |
-| lead\_investor\_flag                      | int?    | 是否领投（0/1）                                                                                                                   |
-| syndicate\_size                           | int?    | 联合投资家数                                                                                                                      |
+| invest\_round                             | enum    | `seed` \| `A` \| `B` … \| `pre-IPO`                                                                                         |
+| stake\_percent                            | number  | 持股比例（%）                                                                                                                     |
+| valuation\_pre / valuation\_post          | number  | 事前/事后估值（CNY）                                                                                                                |
+| buyer\_or\_acquirer / seller\_or\_target  | string  | 收购方/被收购方                                                                                                                    |
+| product\_or\_service                      | string  | 合作标的/产品                                                                                                                     |
+| hs\_code / cicc\_code / gics              | string  | 供需/行业编码                                                                                                                     |
+| contract\_amount                          | number  | 合同额（CNY）                                                                                                                    |
+| start\_date / end\_date                   | date    | 生效区间                                                                                                                        |
+| is\_listed\_source / is\_listed\_target   | int     | 是否上市（0/1）                                                                                                                   |
+| stock\_code\_source / stock\_code\_target | string  | 证券代码，如 `600519.SH`                                                                                                          |
+| exchange\_source / exchange\_target       | enum    | `SSE` \| `SZSE` \| `HKEX` \| `NASDAQ` \| `NYSE`                                                                             |
+| director\_name                            | string  | （若 `board_interlock`）                                                                                                       |
+| lead\_investor\_flag                      | int     | 是否领投（0/1）                                                                                                                   |
+| syndicate\_size                           | int     | 联合投资家数                                                                                                                      |
 
 ### 三、实现与校验建议（精简）
 
@@ -187,14 +187,19 @@ weight 若采用“分摊计数”，请在文档写明方案（如 1/(n_src * n
 python -m venv .venv
 # Windows: .venv\Scripts\activate
 # macOS/Linux: source .venv/bin/activate
-
+```
 R
+```r
 install.packages(c("tidyverse","data.table","readxl","sf","spdep","igraph","arrow"))
+```
 
 Julia
+
+```julia
 using Pkg
 Pkg.activate(".")
 Pkg.instantiate()
+```
 
 复现流程（建议）
 scripts/python/01_collect.py：抓取/下载 → data/raw/
@@ -224,11 +229,13 @@ alias：历史/俗名及英文别名（分号分隔）
 notes：备注
 最小示例（CSV）：
 
+```csv
 city_code,city_name,province_name,province_code,lon,lat
 110100,北京市,北京市,110000,116.405,39.904
 310100,上海市,上海市,310000,121.473,31.230
 440100,广州市,广东省,440000,113.264,23.129
 440300,深圳市,广东省,440000,114.059,22.543
+```
 
 注意：city_code 作为仓库内唯一主键，请在所有表（如 edges_raw.csv、节点年度指标）中统一采用该键进行合并。
 许可证
